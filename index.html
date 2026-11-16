@@ -208,4 +208,104 @@
     .card h3 { margin: 0 0 9px; color: var(--navy); font-size: 18px; }
     .card p { margin: 0; color: var(--muted); font-size: 14px; }
 
-    .two*
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
+    .check-list { padding-left: 21px; margin: 0; }
+    .check-list li { margin: 12px 0; }
+    .step-list { counter-reset: steps; display: grid; gap: 16px; }
+    .step { display: flex; gap: 16px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+    .step:before { counter-increment: steps; content: counter(steps); display: grid; place-items: center; flex: 0 0 38px; height: 38px; border-radius: 12px; background: var(--blue); color: #fff; font-weight: 800; }
+    .step h3 { margin: 0 0 5px; font-size: 17px; color: var(--navy); }
+    .step p { margin: 0; font-size: 14px; color: var(--muted); }
+    .notice { padding: 21px 24px; border-left: 4px solid var(--teal); background: #eef9f7; border-radius: 8px; }
+    .faq-item { padding: 19px 0; border-bottom: 1px solid var(--line); }
+    .faq-item summary { cursor: pointer; font-weight: 750; color: var(--navy); }
+    .faq-item p { margin-bottom: 0; color: var(--muted); }
+    .cta { text-align: center; color: #fff; background: var(--navy); }
+    .cta h2 { color: #fff; }
+    .cta p { color: #d6e2ec; }
+    footer { padding: 28px 0; background: #0a2034; color: #c3d3df; font-size: 13px; }
+    footer .container { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+    :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+    @media (max-width: 800px) {
+      .nav { min-height: 66px; flex-wrap: wrap; padding: 12px 0; }
+      .nav-links { width: 100%; flex-wrap: wrap; gap: 14px; }
+      .hero { padding: 65px 0 70px; }
+      .fact-grid, .grid-3, .two-col { grid-template-columns: 1fr; }
+      .fact { border-right: 0; border-bottom: 1px solid var(--line); }
+      .fact:last-child { border-bottom: 0; }
+      section { padding: 58px 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button { transition: none; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="ISO 13485 소개 홈"><span class="brand-mark" aria-hidden="true">✚</span><span>ISO 13485 GUIDE</span></a>
+      <nav class="nav-links" aria-label="주요 메뉴">
+        <a href="#overview">인증 개요</a><a href="#requirements">핵심 요구사항</a><a href="#process">준비 절차</a><a href="#faq">자주 묻는 질문</a>
+      </nav>
+    </div>
+  </header>
+  <main id="home">
+    <div class="hero">
+      <div class="container hero-content">
+        <span class="eyebrow">MEDICAL DEVICE QUALITY MANAGEMENT</span>
+        <h1>의료기기 품질관리의 기준,<br>ISO 13485</h1>
+        <p>ISO 13485:2016의 의미부터 품질경영시스템의 주요 요구사항과 인증 준비 흐름까지 한눈에 살펴보세요.</p>
+        <div class="hero-actions"><a class="button" href="#requirements">주요 요구사항 보기</a><a class="button secondary" href="#process">인증 준비 절차</a></div>
+        <p class="hero-note">이 페이지는 일반적인 정보 제공용이며 인증기관·규제기관의 공식 심사 기준을 대체하지 않습니다.</p>
+      </div>
+    </div>
+    <div class="container facts" aria-label="ISO 13485 요약">
+      <div class="fact-grid">
+        <div class="fact"><strong>ISO 13485:2016</strong><span>의료기기 품질경영시스템 국제표준</span></div>
+        <div class="fact"><strong>전 생애주기</strong><span>조직의 역할과 적용 범위에 따른 품질관리</span></div>
+        <div class="fact"><strong>문서화 · 실행 · 개선</strong><span>지속적인 시스템 운영의 핵심</span></div>
+      </div>
+    </div>
+    <section id="overview" aria-labelledby="overview-title">
+      <div class="container two-col">
+        <div>
+          <div class="section-heading"><span class="eyebrow">OVERVIEW</span><h2 id="overview-title">ISO 13485란?</h2><p>의료기기 및 관련 서비스에 대한 품질경영시스템 요구사항을 규정하는 국제표준입니다.</p></div>
+          <p>의료기기 산업의 조직이 고객 요구사항 및 해당 규제 요구사항을 일관되게 충족하는 제품과 서비스를 제공할 수 있도록 품질경영시스템의 구축과 운영을 지원합니다.</p>
+        </div>
+        <div class="card"><h3>인증 검토 시 확인할 사항</h3><ul class="check-list"><li>조직의 역할과 인증 적용 범위</li><li>해당 국가·시장 규제 요구사항</li><li>외주 공정을 포함한 프로세스 관리</li><li>적절한 문서 및 품질 기록의 유지</li></ul></div>
+      </div>
+    </section>
+    <section id="requirements" class="soft" aria-labelledby="requirements-title">
+      <div class="container">
+        <div class="section-heading"><span class="eyebrow">KEY REQUIREMENTS</span><h2 id="requirements-title">주요 요구사항</h2><p>ISO 13485:2016의 주요 조항을 실무 관점에서 간략히 정리했습니다.</p></div>
+        <div class="grid-3">
+          <article class="card"><div class="card-icon" aria-hidden="true">01</div><h3>4. 품질경영시스템</h3><p>프로세스, 문서, 기록 및 외주 활동의 적절한 관리</p></article>
+          <article class="card"><div class="card-icon" aria-hidden="true">02</div><h3>5. 경영책임</h3><p>품질방침, 책임과 권한, 경영검토 등 경영진의 역할</p></article>
+          <article class="card"><div class="card-icon" aria-hidden="true">03</div><h3>6. 자원관리</h3><p>인적 자원, 기반시설 및 작업환경 관련 관리</p></article>
+          <article class="card"><div class="card-icon" aria-hidden="true">04</div><h3>7. 제품실현</h3><p>제품 실현계획, 설계·개발(해당 시), 구매, 제조 및 공정 관리</p></article>
+          <article class="card"><div class="card-icon" aria-hidden="true">05</div><h3>8. 측정·분석·개선</h3><p>모니터링, 부적합품 관리, 시정조치 및 예방조치</p></article>
+          <article class="card"><div class="card-icon" aria-hidden="true">✓</div><h3>위험 기반 접근</h3><p>조직의 관련 프로세스에 위험 기반의 적절한 관리 적용</p></article>
+        </div>
+      </div>
+    </section>
+    <section id="process" aria-labelledby="process-title">
+      <div class="container two-col">
+        <div><div class="section-heading"><span class="eyebrow">PREPARATION</span><h2 id="process-title">인증 준비 절차</h2><p>조직의 현황과 인증 범위에 따라 실제 진행 단계는 달라질 수 있습니다.</p></div><div class="notice">인증 준비는 서류를 만드는 것만이 아니라, 문서화된 절차를 실제 운영하고 객관적 증거를 확보하는 과정입니다.</div></div>
+        <div class="step-list">
+          <div class="step"><div><h3>적용 범위와 요구사항 검토</h3><p>제품·활동·사업장 범위를 정의하고 해당 규제 및 표준 요구사항을 확인합니다.</p></div></div>
+          <div class="step"><div><h3>현황 분석 및 품질문서 정비</h3><p>현재 운영 방식과 요구사항의 차이를 검토하고 절차서·양식·기록 체계를 정비합니다.</p></div></div>
+          <div class="step"><div><h3>시스템 운영과 내부 점검</h3><p>절차를 실행하며 증빙을 확보하고 내부심사 및 경영검토를 수행합니다.</p></div></div>
+          <div class="step"><div><h3>외부 인증심사 및 후속조치</h3><p>인증기관 심사에 대응하고 발견된 부적합 사항을 적절히 시정합니다.</p></div></div>
+        </div>
+      </div>
+    </section>
+    <section id="faq" class="soft" aria-labelledby="faq-title">
+      <div class="container"><div class="section-heading"><span class="eyebrow">FAQ</span><h2 id="faq-title">자주 묻는 질문</h2></div>
+        <details class="faq-item"><summary>ISO 13485 인증만으로 의료기기를 판매할 수 있나요?</summary><p>아닙니다. 인증은 품질경영시스템 관련 인증이며, 실제 시장 진입에는 해당 국가의 제품별 인허가 등 별도 요건이 적용될 수 있습니다.</p></details>
+        <details class="faq-item"><summary>제조업체가 아니어도 ISO 13485를 적용할 수 있나요?</summary><p>조직이 의료기기 생애주기의 하나 이상 단계에 참여하는 경우, 역할과 적용 범위에 따라 적용을 검토할 수 있습니다.</p></details>
+        <details class="faq-item"><summary>인증 준비에서 가장 중요한 점은 무엇인가요?</summary><p>정의한 품질경영시스템을 실제로 운영하고, 실행 사실을 확인할 수 있는 적절한 기록을 관리하는 것이 중요합니다.</p></details>
+      </div>
+    </section>
+    <section class="cta" aria-labelledby="cta-title"><div class="container"><h2 id="cta-title">의료기기 품질경영시스템의 출발점</h2><p>적용 범위 확인부터 문서화, 실행, 내부 점검까지 체계적으로 준비하세요.</p><a class="button" href="#home">맨 위로 이동</a></div></section>
+  </main>
+  <footer><div class="container"><span>ISO 13485 Information Guide</span><span>본 사이트는 교육·정보 제공을 목적으로 제작되었습니다.</span></div></footer>
+</body>
+</html>
