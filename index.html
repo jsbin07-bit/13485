@@ -1,311 +1,179 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="의료기기 품질경영시스템 ISO 13485:2016 인증의 의미, 필요성, 주요 요구사항과 준비 절차를 안내합니다.">
-  <title>ISO 13485 | 의료기기 품질경영시스템</title>
-  <style>
-    :root {
-      --navy: #102b46;
-      --blue: #1769aa;
-      --teal: #17a69a;
-      --ink: #1d2b38;
-      --muted: #627386;
-      --pale: #f3f8fb;
-      --line: #dce6ed;
-      --white: #fff;
-      --shadow: 0 16px 42px rgba(16, 43, 70, .10);
-      --radius: 18px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background: var(--white);
-      font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo",
-                   "Malgun Gothic", sans-serif;
-      line-height: 1.7;
-    }
-    a { color: inherit; }
-    .container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      background: rgba(255,255,255,.94);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(12px);
-    }
-    .nav {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      color: var(--navy);
-      font-weight: 800;
-      text-decoration: none;
-      letter-spacing: -.03em;
-    }
-    .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 38px;
-      height: 38px;
-      color: #fff;
-      background: linear-gradient(135deg, var(--blue), var(--teal));
-      border-radius: 12px;
-      font-size: 19px;
-    }
-    .nav-links { display: flex; gap: 25px; align-items: center; }
-    .nav-links a {
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 650;
-      text-decoration: none;
-    }
-    .nav-links a:hover { color: var(--blue); }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 0 20px;
-      border: 0;
-      border-radius: 10px;
-      background: var(--blue);
-      color: var(--white);
-      font-weight: 750;
-      text-decoration: none;
-      transition: transform .2s, background .2s;
-    }
-    .button:hover { background: #0e548d; transform: translateY(-2px); }
-    .button.secondary {
-      color: var(--navy);
-      background: var(--white);
-      border: 1px solid var(--line);
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 88px 0 82px;
-      color: var(--white);
-      background:
-        radial-gradient(circle at 82% 25%, rgba(23,166,154,.25), transparent 28%),
-        linear-gradient(120deg, #102b46, #164f78 68%, #167a86);
-    }
-    .hero:after {
-      content: "";
-      position: absolute;
-      width: 430px;
-      height: 430px;
-      right: -120px;
-      bottom: -250px;
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: 50%;
-      box-shadow: 0 0 0 48px rgba(255,255,255,.035),
-                  0 0 0 100px rgba(255,255,255,.025);
-    }
-    .hero-content { position: relative; z-index: 1; max-width: 760px; }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
-      color: #a9e8e1;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    .eyebrow:before {
-      content: "";
-      width: 24px;
-      height: 2px;
-      background: var(--teal);
-    }
-    h1 {
-      max-width: 760px;
-      margin: 0 0 20px;
-      font-size: clamp(36px, 5vw, 58px);
-      line-height: 1.18;
-      letter-spacing: -.045em;
-    }
-    .hero p {
-      max-width: 680px;
-      margin: 0 0 30px;
-      color: #d5e4ed;
-      font-size: 17px;
-    }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-    .hero .button { background: var(--teal); }
-    .hero .button:hover { background: #108d83; }
-    .hero .button.secondary {
-      color: var(--white);
-      background: transparent;
-      border-color: rgba(255,255,255,.45);
-    }
-    .hero-note { margin-top: 24px !important; color: #b7cbd8 !important; font-size: 12px !important; }
-
-    .facts { margin-top: -28px; position: relative; z-index: 2; }
-    .fact-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      overflow: hidden;
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .fact {
-      padding: 24px 28px;
-      border-right: 1px solid var(--line);
-    }
-    .fact:last-child { border-right: 0; }
-    .fact strong { display: block; color: var(--navy); font-size: 20px; }
-    .fact span { color: var(--muted); font-size: 13px; }
-
-    section { padding: 82px 0; }
-    section.soft { background: var(--pale); }
-    .section-heading { max-width: 720px; margin-bottom: 36px; }
-    .section-heading .eyebrow { color: var(--blue); }
-    h2 {
-      margin: 0 0 12px;
-      color: var(--navy);
-      font-size: clamp(28px, 3.5vw, 40px);
-      line-height: 1.25;
-      letter-spacing: -.035em;
-    }
-    .section-heading p { margin: 0; color: var(--muted); }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .card {
-      padding: 25px;
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-    }
-    .card-icon {
-      display: grid;
-      place-items: center;
-      width: 46px;
-      height: 46px;
-      margin-bottom: 17px;
-      color: var(--blue);
-      background: #eaf4fb;
-      border-radius: 14px;
-      font-size: 21px;
-    }
-    .card h3 { margin: 0 0 9px; color: var(--navy); font-size: 18px; }
-    .card p { margin: 0; color: var(--muted); font-size: 14px; }
-
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
-    .check-list { padding-left: 21px; margin: 0; }
-    .check-list li { margin: 12px 0; }
-    .step-list { counter-reset: steps; display: grid; gap: 16px; }
-    .step { display: flex; gap: 16px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
-    .step:before { counter-increment: steps; content: counter(steps); display: grid; place-items: center; flex: 0 0 38px; height: 38px; border-radius: 12px; background: var(--blue); color: #fff; font-weight: 800; }
-    .step h3 { margin: 0 0 5px; font-size: 17px; color: var(--navy); }
-    .step p { margin: 0; font-size: 14px; color: var(--muted); }
-    .notice { padding: 21px 24px; border-left: 4px solid var(--teal); background: #eef9f7; border-radius: 8px; }
-    .faq-item { padding: 19px 0; border-bottom: 1px solid var(--line); }
-    .faq-item summary { cursor: pointer; font-weight: 750; color: var(--navy); }
-    .faq-item p { margin-bottom: 0; color: var(--muted); }
-    .cta { text-align: center; color: #fff; background: var(--navy); }
-    .cta h2 { color: #fff; }
-    .cta p { color: #d6e2ec; }
-    footer { padding: 28px 0; background: #0a2034; color: #c3d3df; font-size: 13px; }
-    footer .container { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
-    :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
-    @media (max-width: 800px) {
-      .nav { min-height: 66px; flex-wrap: wrap; padding: 12px 0; }
-      .nav-links { width: 100%; flex-wrap: wrap; gap: 14px; }
-      .hero { padding: 65px 0 70px; }
-      .fact-grid, .grid-3, .two-col { grid-template-columns: 1fr; }
-      .fact { border-right: 0; border-bottom: 1px solid var(--line); }
-      .fact:last-child { border-bottom: 0; }
-      section { padding: 58px 0; }
-    }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button { transition: none; } }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#home" aria-label="ISO 13485 소개 홈"><span class="brand-mark" aria-hidden="true">✚</span><span>ISO 13485 GUIDE</span></a>
-      <nav class="nav-links" aria-label="주요 메뉴">
-        <a href="#overview">인증 개요</a><a href="#requirements">핵심 요구사항</a><a href="#process">준비 절차</a><a href="#faq">자주 묻는 질문</a>
-      </nav>
+<!-- ... existing code ... -->
+            <!-- Submit Button & Result -->
+            <div class="pt-8 border-t border-slate-200 text-center">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-xl transition duration-200 text-lg shadow-lg">
+                    답안 제출 및 채점하기
+                </button>
+                <div id="resultBox" class="mt-8 hidden p-6 rounded-xl text-xl font-bold"></div>
+            </div>
+        </form>
     </div>
-  </header>
-  <main id="home">
-    <div class="hero">
-      <div class="container hero-content">
-        <span class="eyebrow">MEDICAL DEVICE QUALITY MANAGEMENT</span>
-        <h1>의료기기 품질관리의 기준,<br>ISO 13485</h1>
-        <p>ISO 13485:2016의 의미부터 품질경영시스템의 주요 요구사항과 인증 준비 흐름까지 한눈에 살펴보세요.</p>
-        <div class="hero-actions"><a class="button" href="#requirements">주요 요구사항 보기</a><a class="button secondary" href="#process">인증 준비 절차</a></div>
-        <p class="hero-note">이 페이지는 일반적인 정보 제공용이며 인증기관·규제기관의 공식 심사 기준을 대체하지 않습니다.</p>
-      </div>
-    </div>
-    <div class="container facts" aria-label="ISO 13485 요약">
-      <div class="fact-grid">
-        <div class="fact"><strong>ISO 13485:2016</strong><span>의료기기 품질경영시스템 국제표준</span></div>
-        <div class="fact"><strong>전 생애주기</strong><span>조직의 역할과 적용 범위에 따른 품질관리</span></div>
-        <div class="fact"><strong>문서화 · 실행 · 개선</strong><span>지속적인 시스템 운영의 핵심</span></div>
-      </div>
-    </div>
-    <section id="overview" aria-labelledby="overview-title">
-      <div class="container two-col">
-        <div>
-          <div class="section-heading"><span class="eyebrow">OVERVIEW</span><h2 id="overview-title">ISO 13485란?</h2><p>의료기기 및 관련 서비스에 대한 품질경영시스템 요구사항을 규정하는 국제표준입니다.</p></div>
-          <p>의료기기 산업의 조직이 고객 요구사항 및 해당 규제 요구사항을 일관되게 충족하는 제품과 서비스를 제공할 수 있도록 품질경영시스템의 구축과 운영을 지원합니다.</p>
-        </div>
-        <div class="card"><h3>인증 검토 시 확인할 사항</h3><ul class="check-list"><li>조직의 역할과 인증 적용 범위</li><li>해당 국가·시장 규제 요구사항</li><li>외주 공정을 포함한 프로세스 관리</li><li>적절한 문서 및 품질 기록의 유지</li></ul></div>
-      </div>
-    </section>
-    <section id="requirements" class="soft" aria-labelledby="requirements-title">
-      <div class="container">
-        <div class="section-heading"><span class="eyebrow">KEY REQUIREMENTS</span><h2 id="requirements-title">주요 요구사항</h2><p>ISO 13485:2016의 주요 조항을 실무 관점에서 간략히 정리했습니다.</p></div>
-        <div class="grid-3">
-          <article class="card"><div class="card-icon" aria-hidden="true">01</div><h3>4. 품질경영시스템</h3><p>프로세스, 문서, 기록 및 외주 활동의 적절한 관리</p></article>
-          <article class="card"><div class="card-icon" aria-hidden="true">02</div><h3>5. 경영책임</h3><p>품질방침, 책임과 권한, 경영검토 등 경영진의 역할</p></article>
-          <article class="card"><div class="card-icon" aria-hidden="true">03</div><h3>6. 자원관리</h3><p>인적 자원, 기반시설 및 작업환경 관련 관리</p></article>
-          <article class="card"><div class="card-icon" aria-hidden="true">04</div><h3>7. 제품실현</h3><p>제품 실현계획, 설계·개발(해당 시), 구매, 제조 및 공정 관리</p></article>
-          <article class="card"><div class="card-icon" aria-hidden="true">05</div><h3>8. 측정·분석·개선</h3><p>모니터링, 부적합품 관리, 시정조치 및 예방조치</p></article>
-          <article class="card"><div class="card-icon" aria-hidden="true">✓</div><h3>위험 기반 접근</h3><p>조직의 관련 프로세스에 위험 기반의 적절한 관리 적용</p></article>
-        </div>
-      </div>
-    </section>
-    <section id="process" aria-labelledby="process-title">
-      <div class="container two-col">
-        <div><div class="section-heading"><span class="eyebrow">PREPARATION</span><h2 id="process-title">인증 준비 절차</h2><p>조직의 현황과 인증 범위에 따라 실제 진행 단계는 달라질 수 있습니다.</p></div><div class="notice">인증 준비는 서류를 만드는 것만이 아니라, 문서화된 절차를 실제 운영하고 객관적 증거를 확보하는 과정입니다.</div></div>
-        <div class="step-list">
-          <div class="step"><div><h3>적용 범위와 요구사항 검토</h3><p>제품·활동·사업장 범위를 정의하고 해당 규제 및 표준 요구사항을 확인합니다.</p></div></div>
-          <div class="step"><div><h3>현황 분석 및 품질문서 정비</h3><p>현재 운영 방식과 요구사항의 차이를 검토하고 절차서·양식·기록 체계를 정비합니다.</p></div></div>
-          <div class="step"><div><h3>시스템 운영과 내부 점검</h3><p>절차를 실행하며 증빙을 확보하고 내부심사 및 경영검토를 수행합니다.</p></div></div>
-          <div class="step"><div><h3>외부 인증심사 및 후속조치</h3><p>인증기관 심사에 대응하고 발견된 부적합 사항을 적절히 시정합니다.</p></div></div>
-        </div>
-      </div>
-    </section>
-    <section id="faq" class="soft" aria-labelledby="faq-title">
-      <div class="container"><div class="section-heading"><span class="eyebrow">FAQ</span><h2 id="faq-title">자주 묻는 질문</h2></div>
-        <details class="faq-item"><summary>ISO 13485 인증만으로 의료기기를 판매할 수 있나요?</summary><p>아닙니다. 인증은 품질경영시스템 관련 인증이며, 실제 시장 진입에는 해당 국가의 제품별 인허가 등 별도 요건이 적용될 수 있습니다.</p></details>
-        <details class="faq-item"><summary>제조업체가 아니어도 ISO 13485를 적용할 수 있나요?</summary><p>조직이 의료기기 생애주기의 하나 이상 단계에 참여하는 경우, 역할과 적용 범위에 따라 적용을 검토할 수 있습니다.</p></details>
-        <details class="faq-item"><summary>인증 준비에서 가장 중요한 점은 무엇인가요?</summary><p>정의한 품질경영시스템을 실제로 운영하고, 실행 사실을 확인할 수 있는 적절한 기록을 관리하는 것이 중요합니다.</p></details>
-      </div>
-    </section>
-    <section class="cta" aria-labelledby="cta-title"><div class="container"><h2 id="cta-title">의료기기 품질경영시스템의 출발점</h2><p>적용 범위 확인부터 문서화, 실행, 내부 점검까지 체계적으로 준비하세요.</p><a class="button" href="#home">맨 위로 이동</a></div></section>
-  </main>
-  <footer><div class="container"><span>ISO 13485 Information Guide</span><span>본 사이트는 교육·정보 제공을 목적으로 제작되었습니다.</span></div></footer>
-</body>
-</html>
+
+    <script>
+        const mcqQuestions = [
+            {
+                q: "ISO 13485의 주요 목적은?",
+                opts: ["직원 복지 향상", "고객 및 규제 요구사항 지속 충족", "생산 비용 최적화", "마케팅 전략 수립"],
+                ans: 1
+            },
+            {
+                q: "품질매뉴얼 필수 포함 항목은?",
+                opts: ["회사의 재무 상태표", "마케팅 부서의 조직도", "적용 제외의 정당성", "모든 직원의 급여 명세서"],
+                ans: 2
+            },
+            {
+                q: "기록 최소 보관 기간은?",
+                opts: ["1년", "출고일로부터 2년 또는 기기 수명 중 긴 기간", "5년", "영구 보관"],
+                ans: 1
+            },
+            {
+                q: "멸균의료기기 포장 시 요구사항은?",
+                opts: ["미생물/미립자 오염관리 및 청결 유지", "가장 저렴한 포장재 사용", "화려한 디자인 적용", "외부 업체의 기본 포장 그대로 사용"],
+                ans: 0
+            },
+            {
+                q: "설계/개발 입력 필수 사항은?",
+                opts: ["기능/성능/안전 요구사항", "경쟁사의 영업 기밀", "제품의 최종 판매 가격", "광고 모델 계약 조건"],
+                ans: 0
+            },
+            {
+                q: "설계 유효성 확인 완료 시점은?",
+                opts: ["제품 판매 후 1년 이내", "고객에게 출고 전", "경쟁사 제품 출시 전", "초도 물량 폐기 후"],
+                ans: 1
+            },
+            {
+                q: "공급자 평가 기준이 아닌 것은?",
+                opts: ["조직 요구사항 충족 능력", "공급자의 성과", "구매품이 의료기기에 미치는 영향", "공급자의 영업 이익률"],
+                ans: 3
+            },
+            {
+                q: "공정 유효성 확인이 필수인 경우는?",
+                opts: ["육안으로 100% 검사가 가능한 경우", "결과물을 후속 측정으로 검증할 수 없는 경우", "포장 박스 색상을 변경하는 경우", "단순한 라벨 부착 공정인 경우"],
+                ans: 1
+            },
+            {
+                q: "인도 후 부적합 발견 시 조치는?",
+                opts: ["부적합의 영향에 비례한 적절한 조치", "조건 없이 무조건적인 환불", "경쟁사 제품으로 교환", "조치 없이 자체 폐기"],
+                ans: 0
+            },
+            {
+                q: "시정조치의 목적은?",
+                opts: ["잠재적 부적합 발생 방지", "부적합 제품의 임시 사용 허가", "재발 방지를 위한 원인 제거", "고객의 단순 변심 해결"],
+                ans: 2
+            }
+        ];
+
+        const subQuestions = [
+            {
+                q: "위험(Risk)의 정의를 기재하시오.",
+                ans: "위해의 발생 가능성과 그 위해의 심각성의 조합"
+            },
+            {
+                q: "내부감사의 목적을 서술하시오.",
+                ans: "품질경영시스템이 요구사항에 적합하며 효과적으로 실행되고 유지되는지 결정하기 위함"
+            },
+            {
+                q: "멸균 공정 필수 유지 기록을 서술하시오.",
+                ans: "각 멸균 배치(batch)에 사용된 멸균 공정 매개변수(parameter) 기록"
+            },
+            {
+                q: "시정조치와 예방조치의 차이를 '발생시점' 기준으로 서술하시오.",
+                ans: "시정조치는 이미 발생한 부적합의 재발을 방지하는 것이며, 예방조치는 잠재적 부적합(아직 발생하지 않음)의 발생을 방지하는 것이다."
+            },
+            {
+                q: "멸균포장시스템의 정의를 서술하시오.",
+                ans: "미생물의 침입을 방지하고 사용 시점에 제품이 무균상태로 제공되도록 하는 최소의 포장"
+            }
+        ];
+
+        // 렌더링
+        const mcqContainer = document.getElementById('mcqContainer');
+        mcqQuestions.forEach((item, index) => {
+            let optionsHTML = '';
+            item.opts.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <label class="block relative cursor-pointer group">
+                        <input type="radio" name="mcq_${index}" value="${optIndex}" class="radio-custom absolute opacity-0 w-0 h-0" required>
+                        <div class="flex items-center p-4 border-2 border-slate-200 rounded-xl transition group-hover:border-blue-300">
+                            <div class="circle w-5 h-5 border-2 border-slate-300 rounded-full mr-4 flex-shrink-0 transition flex items-center justify-center">
+                                <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                            </div>
+                            <span class="text-slate-700">${opt}</span>
+                        </div>
+                    </label>
+                `;
+            });
+            mcqContainer.innerHTML += `
+                <div class="bg-slate-50 p-6 rounded-xl question-block" data-type="mcq" data-index="${index}">
+                    <p class="font-bold text-lg mb-4 text-slate-900"><span class="text-blue-600 mr-2">Q${index + 1}.</span> ${item.q}</p>
+                    <div class="space-y-3 pl-2">${optionsHTML}</div>
+                    <div class="feedback mt-4 text-sm font-bold hidden"></div>
+                </div>
+            `;
+        });
+
+        const subContainer = document.getElementById('subContainer');
+        subQuestions.forEach((item, index) => {
+            subContainer.innerHTML += `
+                <div class="bg-slate-50 p-6 rounded-xl question-block" data-type="sub" data-index="${index}">
+                    <p class="font-bold text-lg mb-4 text-slate-900"><span class="text-orange-600 mr-2">Q${index + 11}.</span> ${item.q}</p>
+                    <textarea name="sub_${index}" rows="2" class="w-full p-4 border-2 border-slate-300 rounded-xl focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition resize-none" placeholder="답안을 서술하세요" required></textarea>
+                    <div class="feedback mt-4 text-[15px] p-4 rounded-lg hidden leading-relaxed"></div>
+                </div>
+            `;
+        });
+
+        // 채점 로직
+        document.getElementById('evaluationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let mcqScore = 0;
+
+            // MCQ 채점
+            mcqQuestions.forEach((item, index) => {
+                const block = document.querySelector(`.question-block[data-type="mcq"][data-index="${index}"]`);
+                const selected = parseInt(document.querySelector(`input[name="mcq_${index}"]:checked`).value);
+                const feedback = block.querySelector('.feedback');
+                
+                feedback.classList.remove('hidden', 'text-green-600', 'text-red-600');
+                if (selected === item.ans) {
+                    mcqScore++;
+                    block.classList.add('border', 'border-green-300', 'bg-green-50');
+                    feedback.classList.add('text-green-600');
+                    feedback.textContent = "정답입니다!";
+                } else {
+                    block.classList.add('border', 'border-red-300', 'bg-red-50');
+                    feedback.classList.add('text-red-600');
+                    feedback.textContent = `오답입니다. 정답: ${item.opts[item.ans]}`;
+                }
+            });
+
+            // 단답형/주관식 채점 (모범답안 표시)
+            subQuestions.forEach((item, index) => {
+                const block = document.querySelector(`.question-block[data-type="sub"][data-index="${index}"]`);
+                const feedback = block.querySelector('.feedback');
+                
+                feedback.classList.remove('hidden');
+                block.classList.add('border', 'border-blue-300', 'bg-blue-50/50');
+                feedback.classList.add('bg-blue-100', 'text-blue-800');
+                feedback.innerHTML = `<span class="font-black mr-2">💡 모범 답안:</span> ${item.ans}`;
+            });
+
+            // 결과 출력 (객관식 점수 기준)
+            const resultBox = document.getElementById('resultBox');
+            resultBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+            const mcqTotal = mcqQuestions.length;
+            const percentage = (mcqScore / mcqTotal) * 100;
+            
+            if (percentage >= 80) {
+                resultBox.classList.add('bg-green-100', 'text-green-800');
+                resultBox.innerHTML = `🎉 객관식 평가 합격입니다! (${mcqTotal}문제 중 ${mcqScore}문제 정답, ${percentage.toFixed(0)}점)<br><span class="text-sm font-medium mt-3 block text-green-700">주관식 문항은 위 표시된 모범답안과 본인의 작성 답안을 비교하여 자체 점검하시기 바랍니다.</span>`;
+            } else {
+                resultBox.classList.add('bg-red-100', 'text-red-800');
+                resultBox.innerHTML = `⚠️ 객관식 평가 재교육이 필요합니다. (${mcqTotal}문제 중 ${mcqScore}문제 정답, ${percentage.toFixed(0)}점 / 합격기준 80점)<br><span class="text-sm font-medium mt-3 block text-red-700">규격서 재학습을 권장합니다. 주관식 모범답안도 함께 확인해주세요.</span>`;
+            }
+            
+            resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    </script>
+
+</body></html>
