@@ -1,179 +1,196 @@
-<!-- ... existing code ... -->
-            <!-- Submit Button & Result -->
-            <div class="pt-8 border-t border-slate-200 text-center">
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-xl transition duration-200 text-lg shadow-lg">
-                    답안 제출 및 채점하기
-                </button>
-                <div id="resultBox" class="mt-8 hidden p-6 rounded-xl text-xl font-bold"></div>
-            </div>
-        </form>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISO 13485:2016 교육 효과성 평가</title>
+  <style>
+    body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f7f6; color: #333; padding: 20px; }
+    .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+    .info-group { display: flex; gap: 10px; margin-bottom: 20px; }
+    .info-group input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+    .question { margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-left: 4px solid #3498db; border-radius: 4px; }
+    .question h4 { margin-top: 0; line-height: 1.4; }
+    label { display: block; margin-bottom: 8px; cursor: pointer; }
+    textarea { width: 100%; height: 80px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: vertical; }
+    button { display: block; width: 100%; padding: 15px; background: #3498db; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+    button:hover { background: #2980b9; }
+    #result-box { display: none; text-align: center; margin-top: 20px; padding: 20px; border-radius: 8px; background-color: #e8f8f5; border: 1px solid #27ae60; }
+    .score-text { font-size: 24px; font-weight: bold; color: #27ae60; margin: 10px 0; }
+  </style>
+</head>
+<body>
+
+<div class="container" id="main-container">
+  <h2>ISO 13485:2016 교육 효과성 평가</h2>
+  <p>모든 문항을 작성한 후 하단의 제출 버튼을 눌러주세요.</p>
+  
+  <div class="info-group">
+    <input type="text" id="department" placeholder="부서명 (예: 품질보증팀)" required>
+    <input type="text" id="userName" placeholder="성명 (예: 홍길동)" required>
+  </div>
+
+  <form id="testForm" onsubmit="submitForm(event)">
+    <!-- 객관식 -->
+    <h3>I. 객관식 (각 10점)</h3>
+    
+    <div class="question">
+      <h4>1. 품질경영시스템에 사용되는 컴퓨터 소프트웨어의 유효성 확인 시기로 알맞은 것은?</h4>
+      <label><input type="radio" name="q1" value="wrong"> 매년 1회 정기적으로</label>
+      <label><input type="radio" name="q1" value="correct" required> 최초 사용 전 및 해당 소프트웨어 변경 후</label>
+      <label><input type="radio" name="q1" value="wrong"> 고객 불만이 접수되었을 때</label>
+      <label><input type="radio" name="q1" value="wrong"> 내부감사 지적사항이 발생했을 때</label>
     </div>
 
-    <script>
-        const mcqQuestions = [
-            {
-                q: "ISO 13485의 주요 목적은?",
-                opts: ["직원 복지 향상", "고객 및 규제 요구사항 지속 충족", "생산 비용 최적화", "마케팅 전략 수립"],
-                ans: 1
-            },
-            {
-                q: "품질매뉴얼 필수 포함 항목은?",
-                opts: ["회사의 재무 상태표", "마케팅 부서의 조직도", "적용 제외의 정당성", "모든 직원의 급여 명세서"],
-                ans: 2
-            },
-            {
-                q: "기록 최소 보관 기간은?",
-                opts: ["1년", "출고일로부터 2년 또는 기기 수명 중 긴 기간", "5년", "영구 보관"],
-                ans: 1
-            },
-            {
-                q: "멸균의료기기 포장 시 요구사항은?",
-                opts: ["미생물/미립자 오염관리 및 청결 유지", "가장 저렴한 포장재 사용", "화려한 디자인 적용", "외부 업체의 기본 포장 그대로 사용"],
-                ans: 0
-            },
-            {
-                q: "설계/개발 입력 필수 사항은?",
-                opts: ["기능/성능/안전 요구사항", "경쟁사의 영업 기밀", "제품의 최종 판매 가격", "광고 모델 계약 조건"],
-                ans: 0
-            },
-            {
-                q: "설계 유효성 확인 완료 시점은?",
-                opts: ["제품 판매 후 1년 이내", "고객에게 출고 전", "경쟁사 제품 출시 전", "초도 물량 폐기 후"],
-                ans: 1
-            },
-            {
-                q: "공급자 평가 기준이 아닌 것은?",
-                opts: ["조직 요구사항 충족 능력", "공급자의 성과", "구매품이 의료기기에 미치는 영향", "공급자의 영업 이익률"],
-                ans: 3
-            },
-            {
-                q: "공정 유효성 확인이 필수인 경우는?",
-                opts: ["육안으로 100% 검사가 가능한 경우", "결과물을 후속 측정으로 검증할 수 없는 경우", "포장 박스 색상을 변경하는 경우", "단순한 라벨 부착 공정인 경우"],
-                ans: 1
-            },
-            {
-                q: "인도 후 부적합 발견 시 조치는?",
-                opts: ["부적합의 영향에 비례한 적절한 조치", "조건 없이 무조건적인 환불", "경쟁사 제품으로 교환", "조치 없이 자체 폐기"],
-                ans: 0
-            },
-            {
-                q: "시정조치의 목적은?",
-                opts: ["잠재적 부적합 발생 방지", "부적합 제품의 임시 사용 허가", "재발 방지를 위한 원인 제거", "고객의 단순 변심 해결"],
-                ans: 2
-            }
-        ];
+    <div class="question">
+      <h4>2. 이 국제 규격에서 요구하는 품질기록의 최소 보관 기간으로 올바른 것은?</h4>
+      <label><input type="radio" name="q2" value="wrong"> 제품 출시 후 1년 이상</label>
+      <label><input type="radio" name="q2" value="correct" required> 조직이 의료기기를 출고한 날로부터 2년 이상</label>
+      <label><input type="radio" name="q2" value="wrong"> 제품 출시 후 5년 이상</label>
+      <label><input type="radio" name="q2" value="wrong"> 영구 보관</label>
+    </div>
 
-        const subQuestions = [
-            {
-                q: "위험(Risk)의 정의를 기재하시오.",
-                ans: "위해의 발생 가능성과 그 위해의 심각성의 조합"
-            },
-            {
-                q: "내부감사의 목적을 서술하시오.",
-                ans: "품질경영시스템이 요구사항에 적합하며 효과적으로 실행되고 유지되는지 결정하기 위함"
-            },
-            {
-                q: "멸균 공정 필수 유지 기록을 서술하시오.",
-                ans: "각 멸균 배치(batch)에 사용된 멸균 공정 매개변수(parameter) 기록"
-            },
-            {
-                q: "시정조치와 예방조치의 차이를 '발생시점' 기준으로 서술하시오.",
-                ans: "시정조치는 이미 발생한 부적합의 재발을 방지하는 것이며, 예방조치는 잠재적 부적합(아직 발생하지 않음)의 발생을 방지하는 것이다."
-            },
-            {
-                q: "멸균포장시스템의 정의를 서술하시오.",
-                ans: "미생물의 침입을 방지하고 사용 시점에 제품이 무균상태로 제공되도록 하는 최소의 포장"
-            }
-        ];
+    <div class="question">
+      <h4>3. 설계 및 개발 변경의 검토 시 반드시 포함되어야 하는 평가 항목이 아닌 것은?</h4>
+      <label><input type="radio" name="q3" value="wrong"> 구성부품 및 제조 중인 제품에 대한 영향</label>
+      <label><input type="radio" name="q3" value="wrong"> 이미 인도된 제품에 대한 영향</label>
+      <label><input type="radio" name="q3" value="wrong"> 위험 관리의 입력 또는 출력에 대한 영향</label>
+      <label><input type="radio" name="q3" value="correct" required> 경쟁사 제품의 판매 가격 변동 분석</label>
+    </div>
 
-        // 렌더링
-        const mcqContainer = document.getElementById('mcqContainer');
-        mcqQuestions.forEach((item, index) => {
-            let optionsHTML = '';
-            item.opts.forEach((opt, optIndex) => {
-                optionsHTML += `
-                    <label class="block relative cursor-pointer group">
-                        <input type="radio" name="mcq_${index}" value="${optIndex}" class="radio-custom absolute opacity-0 w-0 h-0" required>
-                        <div class="flex items-center p-4 border-2 border-slate-200 rounded-xl transition group-hover:border-blue-300">
-                            <div class="circle w-5 h-5 border-2 border-slate-300 rounded-full mr-4 flex-shrink-0 transition flex items-center justify-center">
-                                <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
-                            </div>
-                            <span class="text-slate-700">${opt}</span>
-                        </div>
-                    </label>
-                `;
-            });
-            mcqContainer.innerHTML += `
-                <div class="bg-slate-50 p-6 rounded-xl question-block" data-type="mcq" data-index="${index}">
-                    <p class="font-bold text-lg mb-4 text-slate-900"><span class="text-blue-600 mr-2">Q${index + 1}.</span> ${item.q}</p>
-                    <div class="space-y-3 pl-2">${optionsHTML}</div>
-                    <div class="feedback mt-4 text-sm font-bold hidden"></div>
-                </div>
-            `;
-        });
+    <div class="question">
+      <h4>4. 구매 정보(Purchasing information)에 포함되어야 할 서면 합의서(Written agreement)의 주요 내용은?</h4>
+      <label><input type="radio" name="q4" value="wrong"> 공급자의 연간 재무제표 제출 의무</label>
+      <label><input type="radio" name="q4" value="correct" required> 구매 제품의 능력에 영향을 미치는 변경 실행 전 조직에 통보할 것</label>
+      <label><input type="radio" name="q4" value="wrong"> 모든 지적 재산권의 조직으로의 무조건적 양도</label>
+      <label><input type="radio" name="q4" value="wrong"> 매월 공급자 현장 감사 허용 의무</label>
+    </div>
 
-        const subContainer = document.getElementById('subContainer');
-        subQuestions.forEach((item, index) => {
-            subContainer.innerHTML += `
-                <div class="bg-slate-50 p-6 rounded-xl question-block" data-type="sub" data-index="${index}">
-                    <p class="font-bold text-lg mb-4 text-slate-900"><span class="text-orange-600 mr-2">Q${index + 11}.</span> ${item.q}</p>
-                    <textarea name="sub_${index}" rows="2" class="w-full p-4 border-2 border-slate-300 rounded-xl focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition resize-none" placeholder="답안을 서술하세요" required></textarea>
-                    <div class="feedback mt-4 text-[15px] p-4 rounded-lg hidden leading-relaxed"></div>
-                </div>
-            `;
-        });
+    <div class="question">
+      <h4>5. 인도 전 부적합 제품을 발견했을 때 처리 방법으로 명시되지 않은 것은?</h4>
+      <label><input type="radio" name="q5" value="wrong"> 발견된 부적합의 제거를 위한 조치</label>
+      <label><input type="radio" name="q5" value="wrong"> 본래 사용용도 또는 적용을 배제하는 조치</label>
+      <label><input type="radio" name="q5" value="correct" required> 원가 절감을 위해 할인된 가격으로 그대로 시장에 출시</label>
+      <label><input type="radio" name="q5" value="wrong"> 특채 하에 사용, 출고 또는 수락을 승인</label>
+    </div>
 
-        // 채점 로직
-        document.getElementById('evaluationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            let mcqScore = 0;
+    <div class="question">
+      <h4>6. 시정조치(Corrective action)의 요구사항에 해당하지 않는 것은?</h4>
+      <label><input type="radio" name="q6" value="wrong"> 부적합의 검토(불만 포함)</label>
+      <label><input type="radio" name="q6" value="wrong"> 부적합 원인의 결정</label>
+      <label><input type="radio" name="q6" value="wrong"> 취해진 시정조치 및 그 효과성에 대한 검토</label>
+      <label><input type="radio" name="q6" value="correct" required> 발생하지 않은 잠재적 문제의 원인을 사전에 찾아 제거</label>
+    </div>
 
-            // MCQ 채점
-            mcqQuestions.forEach((item, index) => {
-                const block = document.querySelector(`.question-block[data-type="mcq"][data-index="${index}"]`);
-                const selected = parseInt(document.querySelector(`input[name="mcq_${index}"]:checked`).value);
-                const feedback = block.querySelector('.feedback');
-                
-                feedback.classList.remove('hidden', 'text-green-600', 'text-red-600');
-                if (selected === item.ans) {
-                    mcqScore++;
-                    block.classList.add('border', 'border-green-300', 'bg-green-50');
-                    feedback.classList.add('text-green-600');
-                    feedback.textContent = "정답입니다!";
-                } else {
-                    block.classList.add('border', 'border-red-300', 'bg-red-50');
-                    feedback.classList.add('text-red-600');
-                    feedback.textContent = `오답입니다. 정답: ${item.opts[item.ans]}`;
-                }
-            });
+    <div class="question">
+      <h4>7. 다음 중 ISO 13485 규격에서 정의하는 '위험(Risk)'의 올바른 의미는?</h4>
+      <label><input type="radio" name="q7" value="correct" required> 위해의 발생 가능성과 그 위해의 심각성의 조합</label>
+      <label><input type="radio" name="q7" value="wrong"> 프로젝트 일정 지연 가능성</label>
+      <label><input type="radio" name="q7" value="wrong"> 재무적 손실이 발생할 확률</label>
+      <label><input type="radio" name="q7" value="wrong"> 조직의 명성에 미치는 부정적 영향</label>
+    </div>
 
-            // 단답형/주관식 채점 (모범답안 표시)
-            subQuestions.forEach((item, index) => {
-                const block = document.querySelector(`.question-block[data-type="sub"][data-index="${index}"]`);
-                const feedback = block.querySelector('.feedback');
-                
-                feedback.classList.remove('hidden');
-                block.classList.add('border', 'border-blue-300', 'bg-blue-50/50');
-                feedback.classList.add('bg-blue-100', 'text-blue-800');
-                feedback.innerHTML = `<span class="font-black mr-2">💡 모범 답안:</span> ${item.ans}`;
-            });
+    <div class="question">
+      <h4>8. 경영검토(Management review)의 입력(Input) 요소로 필수적인 것이 아닌 것은?</h4>
+      <label><input type="radio" name="q8" value="wrong"> 감사 결과 및 불만처리 현황</label>
+      <label><input type="radio" name="q8" value="wrong"> 프로세스 및 제품의 모니터링/측정 결과</label>
+      <label><input type="radio" name="q8" value="correct" required> 신입사원 채용 계획 및 복리후생 현황</label>
+      <label><input type="radio" name="q8" value="wrong"> 적용되는 신규 또는 개정된 규제 요구사항</label>
+    </div>
 
-            // 결과 출력 (객관식 점수 기준)
-            const resultBox = document.getElementById('resultBox');
-            resultBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
-            const mcqTotal = mcqQuestions.length;
-            const percentage = (mcqScore / mcqTotal) * 100;
-            
-            if (percentage >= 80) {
-                resultBox.classList.add('bg-green-100', 'text-green-800');
-                resultBox.innerHTML = `🎉 객관식 평가 합격입니다! (${mcqTotal}문제 중 ${mcqScore}문제 정답, ${percentage.toFixed(0)}점)<br><span class="text-sm font-medium mt-3 block text-green-700">주관식 문항은 위 표시된 모범답안과 본인의 작성 답안을 비교하여 자체 점검하시기 바랍니다.</span>`;
-            } else {
-                resultBox.classList.add('bg-red-100', 'text-red-800');
-                resultBox.innerHTML = `⚠️ 객관식 평가 재교육이 필요합니다. (${mcqTotal}문제 중 ${mcqScore}문제 정답, ${percentage.toFixed(0)}점 / 합격기준 80점)<br><span class="text-sm font-medium mt-3 block text-red-700">규격서 재학습을 권장합니다. 주관식 모범답안도 함께 확인해주세요.</span>`;
-            }
-            
-            resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-    </script>
+    <div class="question">
+      <h4>9. 설계 및 개발 검증(Verification)과 유효성 확인(Validation)의 차이로 옳은 것은?</h4>
+      <label><input type="radio" name="q9" value="wrong"> 검증은 임상평가를 의미하며 유효성 확인은 도면 검토를 의미한다.</label>
+      <label><input type="radio" name="q9" value="correct" required> 검증은 설계 출력이 입력을 충족하는지 확인하고, 유효성 확인은 제품이 사용용도를 충족하는지 확인한다.</label>
+      <label><input type="radio" name="q9" value="wrong"> 검증은 제품 인도 후에 실시하고, 유효성 확인은 설계 초기에 실시한다.</label>
+      <label><input type="radio" name="q9" value="wrong"> 둘 사이의 기술적 차이는 없다.</label>
+    </div>
 
-</body></html>
+    <div class="question">
+      <h4>10. 생산 및 서비스 제공 프로세스의 유효성 확인(Validation)이 반드시 필요한 경우는?</h4>
+      <label><input type="radio" name="q10" value="wrong"> 결과물이 후속 모니터링이나 측정에 의해 즉각 100% 검증될 수 있을 때</label>
+      <label><input type="radio" name="q10" value="correct" required> 결과물이 후속 모니터링으로 검증될 수 없어 사용 후에만 결함이 나타나는 공정일 때</label>
+      <label><input type="radio" name="q10" value="wrong"> 단순 포장재 조립 공정</label>
+      <label><input type="radio" name="q10" value="wrong"> 수입검사 전 원자재 하차 공정</label>
+    </div>
+
+    <!-- 주관식 -->
+    <h3>II. 주관식 (평가 참조용 서술형)</h3>
+
+    <div class="question">
+      <h4>1. 귀하의 업무 영역에서 적용되는 '문서화된 절차' 중 가장 중요한 것은 무엇이며, 그 이유는 무엇입니까?</h4>
+      <textarea id="sub1" required></textarea>
+    </div>
+    
+    <div class="question">
+      <h4>2. 내부감사(Internal Audit)가 조직의 품질 향상에 기여하는 바를 간략히 서술하시오.</h4>
+      <textarea id="sub2" required></textarea>
+    </div>
+
+    <div class="question">
+      <h4>3. 제품 추적성(Traceability) 관리가 환자의 안전에 미치는 영향에 대해 서술하시오.</h4>
+      <textarea id="sub3" required></textarea>
+    </div>
+
+    <div class="question">
+      <h4>4. 부적합품 발생 시 즉시 취해야 할 조치와 해당 부서의 역할에 대해 설명하시오.</h4>
+      <textarea id="sub4" required></textarea>
+    </div>
+
+    <div class="question">
+      <h4>5. 향후 본인 업무에 AI 도구(Gemini, ChatGPT 등)를 도입한다면 어떤 프로세스(예: 데이터 분석, 불만처리 초안 작성 등)에 활용할 수 있을지 서술하시오.</h4>
+      <textarea id="sub5" required></textarea>
+    </div>
+
+    <button type="submit" id="submitBtn">시험 제출 및 채점하기</button>
+  </form>
+
+  <!-- 결과 출력 영역 -->
+  <div id="result-box">
+    <h2 style="border:none; margin-bottom:0;">평가 완료</h2>
+    <p id="result-info"></p>
+    <div class="score-text" id="result-score"></div>
+    <p style="color:#555;">주관식 문항은 담당자가 별도로 확인합니다.<br>수고하셨습니다.</p>
+    <button onclick="location.reload()" style="background:#7f8c8d; margin-top:15px;">처음으로 돌아가기</button>
+  </div>
+</div>
+
+<script>
+  function submitForm(event) {
+    event.preventDefault();
+    
+    var userName = document.getElementById("userName").value.trim();
+    var department = document.getElementById("department").value.trim();
+    
+    if(!userName || !department) {
+      alert("이름과 부서를 상단에 입력해주세요.");
+      return;
+    }
+
+    // 객관식 10문항 채점 (문항당 10점)
+    var score = 0;
+    for (var i = 1; i <= 10; i++) {
+      var radios = document.getElementsByName('q' + i);
+      for (var j = 0; j < radios.length; j++) {
+        if (radios[j].checked && radios[j].value === 'correct') {
+          score += 10;
+        }
+      }
+    }
+
+    // 폼 숨기고 결과 창 표시
+    document.getElementById("testForm").style.display = "none";
+    document.getElementById("result-box").style.display = "block";
+    
+    // 결과 텍스트 삽입
+    document.getElementById("result-info").innerHTML = "<strong>" + department + " " + userName + "</strong> 님의 객관식 평가 결과입니다.";
+    document.getElementById("result-score").innerHTML = score + " / 100 점";
+    
+    // 깃허브 페이지는 정적 호스팅이므로 화면에만 결과를 띄웁니다.
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>
